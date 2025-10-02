@@ -1,54 +1,38 @@
-#pragma once
+#ifndef SELLER_H
+#define SELLER_H
+
 #include "buyer.h"
-#include "item.h"
 #include <string>
-#include <vector>
+using namespace std;
 
-class seller : public Buyer {
-
+class Seller {
 private:
-    // Add seller-specific private members here
-    int sellerId;
-    std::string sellerName;
-    bool idDisplayed(int itemId) const {
-        // Example implementation, can be customized
-        return itemId > 0; // Assuming valid IDs are positive integers
-    }
-
-    vector<Item> items; // Assuming seller has a collection of items
-
+    int id;
+    string name;
+    string phone;
+    string address;
+    Buyer linkedBuyer; // relasi ke buyer
 
 public:
-    seller() = default;
+    // Constructor
+    Seller(Buyer buyer, int id, string name, string phone, string address)
+        : linkedBuyer(buyer), id(id), name(name), phone(phone), address(address) {}
 
-    seller(Buyer buyer, int sellerId, const std::string& sellerName)
-        : Buyer(buyer.getId(), buyer.getName(), buyer.getAccount()), sellerId(sellerId), sellerName(sellerName) {
-            Buyer::setId(buyer.getId());
-        }
+    // Getters
+    int getId() const { return id; }
+    string getName() const { return name; }
+    string getPhone() const { return phone; }
+    string getAddress() const { return address; }
+    Buyer getLinkedBuyer() const { return linkedBuyer; }
 
-    virtual ~seller() = default;
-
-    void addNewItem(int newId, const std::string& newName, int newQuantity, double newPrice) {
-        Item newItem(newId, newName, newQuantity, newPrice);
-        items.push_back(newItem);
+    // Utility
+    string getDetails() const {
+        return "SellerID: " + to_string(id) +
+               ", Name: " + name +
+               ", Phone: " + phone +
+               ", Address: " + address +
+               ", Linked Buyer: " + linkedBuyer.getName();
     }
-
-    void updateItem(int itemId, const std::string& newName, int newQuantity, double newPrice) {
-        for (auto& item : items) {
-            if (item.getId() == itemId) {
-                item.alterItemById(itemId, newName, newQuantity, newPrice); // Assuming alterItemById is a method
-            }
-        }
-    }
-
-    void makeItemVisibleToCustomer(int itemId) {
-        for (auto& item : items) {
-            if (item.getId() == itemId) {
-                item.setDisplay(true); // Assuming setDisplay is a method in Item class
-                break;
-            }
-        }
-    }
-
-    // Add seller-specific members here
 };
+
+#endif
