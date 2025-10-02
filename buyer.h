@@ -1,28 +1,38 @@
 #ifndef BUYER_H
 #define BUYER_H
 
-#include <cstddef>
-#include <string>
 #include "bank_customer.h"
-
+#include <string>
 using namespace std;
 
 class Buyer {
 private:
     int id;
     string name;
-    BankCustomer &account; // Association with BankCustomer
+    string phone;
+    string address;
+    BankCustomer account;  // relasi ke BankCustomer
 
 public:
-    Buyer(int id, const string& name, BankCustomer &account0)
-        : id(id), name(name), account(account0) {}
+    // Constructor
+    Buyer(int id, string name, string phone, string address, BankCustomer account)
+        : id(id), name(name), phone(phone), address(address), account(account) {}
 
+    // Getters
     int getId() const { return id; }
     string getName() const { return name; }
-    BankCustomer& getAccount() { return account; }
+    string getPhone() const { return phone; }
+    string getAddress() const { return address; }
+    BankCustomer getAccount() const { return account; }
 
-    void setId(int newId) { id = newId; }
-    void setName(const std::string& newName) { name = newName; }
+    // Utility
+    string getDetails() const {
+        return "ID: " + to_string(id) +
+               ", Name: " + name +
+               ", Phone: " + phone +
+               ", Address: " + address +
+               ", Bank Balance: " + to_string(account.getBalance());
+    }
 };
 
-#endif // BUYER_H
+#endif

@@ -1,16 +1,31 @@
-#include "bank_customer.h"
-#include <iostream>
-#include <vector>
+#ifndef BANK_CUSTOMER_H
+#define BANK_CUSTOMER_H
 
-class Bank{
+#include <string>
+using namespace std;
+
+class BankCustomer {
 private:
+    int id;
     string name;
-    vector<BankCustomer> Accounts{};
-    int customerCount;
+    double balance;
 
 public:
-    Bank(const string& name){
-        this->name = name;
-        this->customerCount = 0;
-    }
+    // Constructor
+    BankCustomer(int id, string name, double balance);
+
+    // Getters
+    int getId() const;
+    string getName() const;
+    double getBalance() const;
+
+    // Setters / Operations
+    void setBalance(double amount);
+    void addBalance(double amount);
+    bool withdrawBalance(double amount);
+
+    // Utility
+    void printInfo() const;
 };
+
+#endif
